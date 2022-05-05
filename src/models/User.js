@@ -37,19 +37,33 @@ userSchema.pre('save', function(next) {
 });
 
 //comparing original and salting password
-userSchema.methods.comparePassword = function comparePassword(candidatePassword) {
-    return new Promise((resolve, reject) => {
-        // comparing both
-        bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-            if (err) {
-                return reject(err);
-            }
-
-            if (!isMatch) {
-                return resolve(true);
-            }
-        });
+userSchema.methods.comparePassword = function (candidatePassword, cb) {
+    // comparing both
+    bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+        if (err) return cb(err);
+        cb(null, isMatch);
     });
 }
 
-mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);
+
+
+
+
+// //comparing original and salting password
+// userSchema.methods.comparePassword = function comparePassword(candidatePassword) {
+//     return new Promise((resolve, reject) => {
+//         // comparing both
+//         bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+//             if (err) {
+//                 return reject(err);
+//             }
+
+//             if (!isMatch) {
+//                 return resolve(true);
+//             }
+//         });
+//     });
+// }
+
+// mongoose.model('User', userSchema);
