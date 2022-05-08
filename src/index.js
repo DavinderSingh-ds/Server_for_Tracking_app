@@ -16,7 +16,6 @@ app.use(authRoutes);
 app.use(trackRoutes);
 
 const mongoUri = 'mongodb+srv://davinder:davinder@cluster0.ivgka.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-
 mongoose.connect(mongoUri);
 
 mongoose.connection.on('connected',() => {
